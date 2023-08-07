@@ -1,0 +1,27 @@
+{
+    "tasks": [
+        {
+            "label": "My build task",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "main.cpp",
+                //"geo.cpp",
+                //"json.cpp",
+                //"json_reader.cpp",
+                //"json_builder.cpp",
+                //"svg.cpp",
+                //"map_renderer.cpp",
+                "input_reader.cpp",
+                "stat_reader.cpp",
+                "transport_catalogue.cpp",
+                "-o",
+                "out.exe"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}
