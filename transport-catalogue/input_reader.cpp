@@ -18,11 +18,11 @@ void InputReader::ProcessingDistance(int coma, string_view name, string_view req
         request.remove_prefix(pos_m + 5);
         coma = request.find(',');
         if (coma == request.npos) { 
-            t_c.AddDistance(name, request, distance);
+            t_c.EstablishDistance(name, request, distance);
             request.remove_prefix(request.size());
             break;   
         }
-        t_c.AddDistance(name, request.substr(0, coma), distance);
+        t_c.EstablishDistance(name, request.substr(0, coma), distance);
     }
 }
 
@@ -41,7 +41,9 @@ Stop InputReader::ReadStop(string_view request, TransportCatalogue& t_c) {
         ProcessingDistance(coma, name, request, t_c);
     }
 
-    return Stop{(string)name, StringToNum<double>(move(latitude_str)), StringToNum<double>(move(longitude_str)), {}};
+    t_c.AddPassingBuses(name);
+
+    return Stop{(string)name, StringToNum<double>(move(latitude_str)), StringToNum<double>(move(longitude_str))};
 }
 
 pair<vector<string_view>, Bus::BusType> InputReader::BusStopsProcessing(string_view request) {
@@ -84,8 +86,8 @@ Bus InputReader::ReadBus(string_view request, TransportCatalogue& t_c) {
     vector<Stop*> stops;
     auto [stops_view, type] = BusStopsProcessing(request);
     for (auto& stop_view : stops_view) {
+        t_c.AddPassingBuses(stop_view, name);
         Stop* stop = t_c.FindStop(stop_view);
-        stop->passing_buses_.insert(name);
         stops.push_back(stop);
     }
 

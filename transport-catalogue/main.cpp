@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -13,10 +14,13 @@ int main () {
     //catalogue::tests::TestTransportCatalogue();
     //catalogue::tests::TestStatReader();
 
-    catalogue::input::InputReader input_reader(cin);
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    catalogue::input::InputReader input_reader(in);
     catalogue::TransportCatalogue transport_catalogue;
     input_reader.InitialTransportCatalogue(transport_catalogue);
-    catalogue::output::StatReader stat_reader(cin, cout, transport_catalogue);
+    catalogue::output::StatReader stat_reader(in, out, transport_catalogue);
     stat_reader.ProcessingRequests();
 
 }

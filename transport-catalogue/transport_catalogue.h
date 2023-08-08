@@ -15,9 +15,7 @@ namespace catalogue {
 struct Stop
 {
     std::string name_stop_;
-    double latitude_;
-    double longitude_;
-    std::set<std::string_view> passing_buses_;
+    Coordinates coordinates_;
 };
 
 struct Bus
@@ -42,18 +40,22 @@ struct InfoBus {
 class TransportCatalogue {
 
 public:
-    void AddStop(Stop stop);
+    void AddStop(Stop&& stop);
     std::deque<Stop>& GetStops();
     std::unordered_map<std::string_view, Stop*>& GetMapStops();
     Stop* FindStop(std::string_view name_stop);
 
-    void AddBus(Bus bus);
+    void AddBus(Bus&& bus);
     std::deque<Bus>& GetBuses();
     std::unordered_map<std::string_view, Bus*>& GetMapBuses();
     Bus* FindBus(std::string_view name_bus);
     InfoBus GetBusInfo(std::string_view bus_view);
 
-    void AddDistance(std::string_view from, std::string_view to, int distance);
+    void AddPassingBuses(std::string_view stop);
+    void AddPassingBuses(std::string_view stop, std::string_view bus);
+    std::set<std::string_view>* FindPassingBuses(std::string_view stop);
+
+    void EstablishDistance(std::string_view from, std::string_view to, int distance);
 
 private :
 
@@ -69,6 +71,7 @@ private :
     std::deque<Bus> buses_;
     std::unordered_map<std::string_view, Bus*> accses_to_buses_;
     std::unordered_map<std::pair<std::string_view, std::string_view>, int, Hasher> stopping_distance_;
+    std::unordered_map<std::string_view, std::set<std::string_view>> stop_to_passing_buses_;
 
     void ComputeLength(int* length_bus, double* geo_length_bus, std::vector<Stop*> stops);
     int FindDistance(std::string_view from, std::string_view to);

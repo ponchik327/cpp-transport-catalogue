@@ -4,7 +4,7 @@ using namespace std;
 
 namespace catalogue {
 
-void TransportCatalogue::AddStop(Stop stop) {
+void TransportCatalogue::AddStop(Stop&& stop) {
     stops_.push_back(move(stop));
     accses_to_stops_[string_view(stops_.back().name_stop_)] = &stops_.back();
 }
@@ -19,12 +19,12 @@ unordered_map<string_view, Stop*>& TransportCatalogue::GetMapStops() {
 
 Stop* TransportCatalogue::FindStop(std::string_view name_stop) {
     if (auto it_stop = accses_to_stops_.find(name_stop); it_stop != accses_to_stops_.end()) {
-        return accses_to_stops_.at(name_stop);
+        return it_stop->second;
     }
     return nullptr;
 }
 
-void TransportCatalogue::AddBus(Bus bus) {
+void TransportCatalogue::AddBus(Bus&& bus) {
     buses_.push_back(move(bus));
     accses_to_buses_[string_view(buses_.back().name_bus_)] = &buses_.back();
 }
@@ -39,12 +39,27 @@ unordered_map<string_view, Bus*>& TransportCatalogue::GetMapBuses() {
 
 Bus* TransportCatalogue::FindBus(std::string_view name_bus) {
     if (auto it_bus = accses_to_buses_.find(name_bus); it_bus != accses_to_buses_.end()) {
-        return accses_to_buses_.at(name_bus);
+        return it_bus->second;
     }
     return nullptr;
 }
 
-void TransportCatalogue::AddDistance(string_view from, string_view to, int distance) {
+void TransportCatalogue::AddPassingBuses(std::string_view stop) {
+    stop_to_passing_buses_[stop];
+}
+
+void TransportCatalogue::AddPassingBuses(string_view stop, string_view bus) {
+    stop_to_passing_buses_[stop].insert(bus);
+}
+
+set<string_view>* TransportCatalogue::FindPassingBuses(std::string_view stop) {
+    if (auto it_stop = stop_to_passing_buses_.find(stop); it_stop != stop_to_passing_buses_.end()) {
+        return &it_stop->second;
+    }
+    return nullptr;
+}
+
+void TransportCatalogue::EstablishDistance(string_view from, string_view to, int distance) {
     pair<string_view, string_view> couple_stops = {from, to};
     auto element = stopping_distance_.find(couple_stops);
     if (element != stopping_distance_.end()) {
@@ -64,7 +79,7 @@ int TransportCatalogue::FindDistance(string_view from, string_view to) {
 void TransportCatalogue::ComputeLength(int* length_bus, double* geo_length_bus, vector<Stop*> stops) {
     for (auto it = stops.begin(); it < stops.end(); ++it) {
         if (it + 1 < stops.end()) {
-            *geo_length_bus += ComputeDistance(Coordinates{(*it)->latitude_, (*it)->longitude_}, Coordinates{(*(it + 1))->latitude_, (*(it + 1))->longitude_});
+            *geo_length_bus += ComputeDistance(Coordinates{(*it)->coordinates_.lat, (*it)->coordinates_.lng}, Coordinates{(*(it + 1))->coordinates_.lat, (*(it + 1))->coordinates_.lng});
             *length_bus += FindDistance((*it)->name_stop_, (*(it + 1))->name_stop_);
         }
     }
