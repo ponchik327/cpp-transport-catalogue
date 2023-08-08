@@ -40,22 +40,18 @@ struct InfoBus {
 class TransportCatalogue {
 
 public:
-    void AddStop(Stop&& stop);
-    std::deque<Stop>& GetStops();
-    std::unordered_map<std::string_view, Stop*>& GetMapStops();
+    void AddStop(const Stop&& stop);
     Stop* FindStop(std::string_view name_stop);
 
-    void AddBus(Bus&& bus);
-    std::deque<Bus>& GetBuses();
-    std::unordered_map<std::string_view, Bus*>& GetMapBuses();
+    void AddBus(const Bus&& bus);
     Bus* FindBus(std::string_view name_bus);
     InfoBus GetBusInfo(std::string_view bus_view);
 
     void AddPassingBuses(std::string_view stop);
     void AddPassingBuses(std::string_view stop, std::string_view bus);
-    std::set<std::string_view>* FindPassingBuses(std::string_view stop);
+    std::set<std::string_view>* GetPassingBuses(std::string_view stop);
 
-    void EstablishDistance(std::string_view from, std::string_view to, int distance);
+    void SetDistance(std::string_view from, std::string_view to, int distance);
 
 private :
 

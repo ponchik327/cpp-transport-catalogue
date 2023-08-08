@@ -18,11 +18,11 @@ void InputReader::ProcessingDistance(int coma, string_view name, string_view req
         request.remove_prefix(pos_m + 5);
         coma = request.find(',');
         if (coma == request.npos) { 
-            t_c.EstablishDistance(name, request, distance);
+            t_c.SetDistance(name, request, distance);
             request.remove_prefix(request.size());
             break;   
         }
-        t_c.EstablishDistance(name, request.substr(0, coma), distance);
+        t_c.SetDistance(name, request.substr(0, coma), distance);
     }
 }
 

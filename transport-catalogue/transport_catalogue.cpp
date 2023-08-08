@@ -4,17 +4,9 @@ using namespace std;
 
 namespace catalogue {
 
-void TransportCatalogue::AddStop(Stop&& stop) {
+void TransportCatalogue::AddStop(const Stop&& stop) {
     stops_.push_back(move(stop));
     accses_to_stops_[string_view(stops_.back().name_stop_)] = &stops_.back();
-}
-
-deque<Stop>& TransportCatalogue::GetStops() {
-    return stops_;
-}
-
-unordered_map<string_view, Stop*>& TransportCatalogue::GetMapStops() {
-    return accses_to_stops_;
 }
 
 Stop* TransportCatalogue::FindStop(std::string_view name_stop) {
@@ -24,17 +16,9 @@ Stop* TransportCatalogue::FindStop(std::string_view name_stop) {
     return nullptr;
 }
 
-void TransportCatalogue::AddBus(Bus&& bus) {
+void TransportCatalogue::AddBus(const Bus&& bus) {
     buses_.push_back(move(bus));
     accses_to_buses_[string_view(buses_.back().name_bus_)] = &buses_.back();
-}
-
-deque<Bus>& TransportCatalogue::GetBuses() {
-    return buses_;
-}
-     
-unordered_map<string_view, Bus*>& TransportCatalogue::GetMapBuses() {
-    return accses_to_buses_;
 }
 
 Bus* TransportCatalogue::FindBus(std::string_view name_bus) {
@@ -52,14 +36,14 @@ void TransportCatalogue::AddPassingBuses(string_view stop, string_view bus) {
     stop_to_passing_buses_[stop].insert(bus);
 }
 
-set<string_view>* TransportCatalogue::FindPassingBuses(std::string_view stop) {
+set<string_view>* TransportCatalogue::GetPassingBuses(std::string_view stop) {
     if (auto it_stop = stop_to_passing_buses_.find(stop); it_stop != stop_to_passing_buses_.end()) {
         return &it_stop->second;
     }
     return nullptr;
 }
 
-void TransportCatalogue::EstablishDistance(string_view from, string_view to, int distance) {
+void TransportCatalogue::SetDistance(string_view from, string_view to, int distance) {
     pair<string_view, string_view> couple_stops = {from, to};
     auto element = stopping_distance_.find(couple_stops);
     if (element != stopping_distance_.end()) {

@@ -25,7 +25,7 @@ void StatReader::PrintInfoBus(string_view bus_view) {
 }
 
 void StatReader::PrintInfoStop(string_view stop_view) {
-    const auto ptr_on_passing_buses = tran_catal_.FindPassingBuses(stop_view);
+    const auto ptr_on_passing_buses = tran_catal_.GetPassingBuses(stop_view);
     if (ptr_on_passing_buses == nullptr) {
         output_ << "Stop "s << stop_view << ": not found"s << endl;
     } else if (ptr_on_passing_buses->empty()) {

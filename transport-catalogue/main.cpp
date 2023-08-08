@@ -6,14 +6,8 @@ using namespace std;
 #include "input_reader.h"
 #include "transport_catalogue.h"
 #include "stat_reader.h"
-//#include "tests.h"
 
 int main () {
-
-    //catalogue::tests::TestInputReader();
-    //catalogue::tests::TestTransportCatalogue();
-    //catalogue::tests::TestStatReader();
-
     ifstream in("input.txt");
     ofstream out("output.txt");
 
