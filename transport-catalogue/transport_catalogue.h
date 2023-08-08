@@ -15,7 +15,7 @@ namespace catalogue {
 struct Stop
 {
     std::string name_stop_;
-    Coordinates coordinates_;
+    geo::Coordinates coordinates_;
 };
 
 struct Bus
@@ -45,6 +45,7 @@ public:
 
     void AddBus(const Bus&& bus);
     Bus* FindBus(std::string_view name_bus);
+    const std::unordered_map<std::string_view, Bus*>& GetMapBuses() const;
     InfoBus GetBusInfo(std::string_view bus_view);
 
     void AddPassingBuses(std::string_view stop);

@@ -1,20 +1,18 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 
 using namespace std;
 
-#include "input_reader.h"
+#include "json_reader.h"
+#include "map_renderer.h"
 #include "transport_catalogue.h"
-#include "stat_reader.h"
 
 int main () {
-    ifstream in("input.txt");
-    ofstream out("output.txt");
+    ifstream in("input.json");
+    ofstream out("output.json");
 
-    catalogue::input::InputReader input_reader(in);
     catalogue::TransportCatalogue transport_catalogue;
-    input_reader.InitialTransportCatalogue(transport_catalogue);
-    catalogue::output::StatReader stat_reader(in, out, transport_catalogue);
-    stat_reader.ProcessingRequests();
-
+    catalogue::json_handler::JsonReader json_reader(in, transport_catalogue);
+    json_reader.ProcessingRequests(out);
 }
