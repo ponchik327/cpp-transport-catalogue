@@ -4,81 +4,65 @@ using namespace std;
 
 namespace json {
 
-namespace context {
-
 //--------------- BaseContext ----------------
 
-Base::Base(Builder& b)
+Builder::Base::Base(Builder& b)
     : builder_(b) {
 }
 
-KeyItem Base::Key(string key) {
+Builder::KeyItem Builder::Base::Key(string key) {
     return builder_.Key(key);
 }
 
-Builder& Base::Value(Node::Value node) {
+Builder& Builder::Base::Value(Node::Value node) {
     return builder_.Value(node);
 }
 
-DictItem Base::StartDict() {
+Builder::DictItem Builder::Base::StartDict() {
     return builder_.StartDict();
 } 
 
-ArrayItem Base::StartArray() {
+Builder::ArrayItem Builder::Base::StartArray() {
     return builder_.StartArray();
 }
 
-Builder& Base::EndDict() {
+Builder& Builder::Base::EndDict() {
     return builder_.EndDict();
 }
 
-Builder& Base::EndArray() {
+Builder& Builder::Base::EndArray() {
     return builder_.EndArray();
 }
 
-Node Base::Build() {
+Node Builder::Base::Build() {
     return  builder_.Build();
 }
 
 //--------------- HelpConstructors ----------------
 
-KeyItem::KeyItem(Builder& b)
+Builder::KeyItem::KeyItem(Builder& b)
     : Base(b) {
 }
 
-AfterKey KeyItem::Value(Node::Value node) {
-    return AfterKey{Base::Value(node)};
+Builder::DictItem Builder::KeyItem::Value(Node::Value node) {
+    return DictItem{Base::Value(node)};
 }
 
-DictItem::DictItem(Builder& b)
+Builder::DictItem::DictItem(Builder& b)
     : Base(b) {
 }
 
-ArrayItem::ArrayItem(Builder& b)
+Builder::ArrayItem::ArrayItem(Builder& b)
     : Base(b) {
 }
 
-AfterStartArray ArrayItem::Value(Node::Value node) {
-    return AfterStartArray{Base::Value(node)};
+Builder::ArrayItem Builder::ArrayItem::Value(Node::Value node) {
+    return ArrayItem{Base::Value(node)};
 }
-
-AfterKey::AfterKey(Builder& b)
-    : Base(b) {
-}
-
-AfterStartArray::AfterStartArray(Builder& b)
-    : Base(b) {
-}
-
-AfterStartArray AfterStartArray::Value(Node::Value node) {
-    return AfterStartArray{Base::Value(node)};
-}
-
-} // namespace context
 
 //--------------- Builder ----------------
 
-context::KeyItem Builder::Key(string key) {
+Builder::KeyItem Builder::Key(string key) {
     if (nodes_stack_.empty()) {
         throw logic_error("was expected Build()"); 
     }
@@ -117,7 +101,7 @@ Builder& Builder::Value(Node::Value val_node) {
     throw logic_error("Uncorrect use Value()");
 }
 
-context::DictItem Builder::StartDict() {
+Builder::DictItem Builder::StartDict() {
     if (nodes_stack_.empty() && is_initial_) {
         throw logic_error("was expected Build()"); 
     }
@@ -140,7 +124,7 @@ context::DictItem Builder::StartDict() {
     throw logic_error("Uncorrect use StartDict()");
 }
 
-context::ArrayItem Builder::StartArray() {
+Builder::ArrayItem Builder::StartArray() {
     if (nodes_stack_.empty() && is_initial_) {
         throw logic_error("was expected Build()"); 
     }
