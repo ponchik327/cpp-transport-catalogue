@@ -101,49 +101,35 @@ Builder& Builder::Value(Node::Value val_node) {
     throw logic_error("Uncorrect use Value()");
 }
 
-Builder::DictItem Builder::StartDict() {
+Builder& Builder::InitialNewNode(const Node&& node) {
     if (nodes_stack_.empty() && is_initial_) {
         throw logic_error("was expected Build()"); 
     }
     is_initial_ = true;
-    Node d{Dict{}};
     if (nodes_stack_.empty()) {
-        root_ = move(d);
+        root_ = move(node);
         nodes_stack_.push_back(&root_);
         return {*this};
     } 
     auto ptr_on_node = nodes_stack_.back();
     if (ptr_on_node->IsArray()) {
-        Get<Array>().push_back(move(d));
+        Get<Array>().push_back(move(node));
         nodes_stack_.push_back(&Get<Array>().back());
-        return {*this};
     } else if (ptr_on_node->IsNull()) {
-        *ptr_on_node = move(d);
-        return {*this};
+        *ptr_on_node = move(node);
     }
+    return {*this};
+}
+
+Builder::DictItem Builder::StartDict() {
+    Node d{Dict{}};
+    return {InitialNewNode(move(d))};
     throw logic_error("Uncorrect use StartDict()");
 }
 
 Builder::ArrayItem Builder::StartArray() {
-    if (nodes_stack_.empty() && is_initial_) {
-        throw logic_error("was expected Build()"); 
-    }
-    is_initial_ = true;
     Node ar{Array{}};
-    if (nodes_stack_.empty()) {
-        root_ = move(ar);
-        nodes_stack_.push_back(&root_);
-        return {*this};
-    } 
-    auto ptr_on_node = nodes_stack_.back();
-    if (ptr_on_node->IsArray()) {
-        Get<Array>().push_back(move(ar));
-        nodes_stack_.push_back(&Get<Array>().back());
-        return {*this};
-    } else if (ptr_on_node->IsNull()) {
-        *ptr_on_node = move(ar);
-        return {*this};
-    }
+    return {InitialNewNode(move(ar))};
     throw logic_error("Uncorrect use StartArray()");
 }
 

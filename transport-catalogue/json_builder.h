@@ -70,6 +70,7 @@ public:
 public :
     KeyItem Key(std::string key);
     Builder& Value(Node::Value node);
+    Builder& InitialNewNode(const Node&& node);
     DictItem StartDict();
     ArrayItem StartArray();
     Builder& EndDict();
