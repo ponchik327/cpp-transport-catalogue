@@ -4,6 +4,7 @@
 #include <string_view>
 
 #include "transport_catalogue.h"
+#include "json_builder.h"
 #include "json.h"
 #include "map_renderer.h"
 
@@ -39,9 +40,9 @@ private:
     Stop ReadStop(Request& request, TransportCatalogue& t_c);
     Bus ReadBus(Request& request, TransportCatalogue& t_c);
 
-    void PrintInfoBus(std::ostream& output, std::string_view bus_view, int id);
-    void PrintInfoStop(std::ostream& output, std::string_view stop_view, int id);
-    void PrintInfoMap(std::ostream& output, int id);
+    json::Node::Value PrintInfoBus(std::string_view bus_view, int id);
+    json::Node::Value PrintInfoStop(std::string_view stop_view, int id);
+    json::Node::Value PrintInfoMap(int id);
 
     uint8_t NodeToUint8(const json::Node& color, int index);
     svg::Color InitialColor(const json::Node& color);

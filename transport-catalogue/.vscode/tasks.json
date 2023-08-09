@@ -10,7 +10,7 @@
                 "geo.cpp",
                 "json.cpp",
                 "json_reader.cpp",
-                //"json_builder.cpp",
+                "json_builder.cpp",
                 "svg.cpp",
                 "map_renderer.cpp",
                 //"input_reader.cpp",

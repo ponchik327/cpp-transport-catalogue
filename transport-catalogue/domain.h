@@ -8,9 +8,7 @@
 struct Stop
 {
     std::string name_stop_;
-    double latitude_;
-    double longitude_;
-    std::set<std::string_view> passing_buses_;
+    geo::Coordinates coordinates_;
 };
 
 struct Bus

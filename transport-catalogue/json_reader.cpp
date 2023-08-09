@@ -129,44 +129,50 @@ visual::MapRender JsonReader::ProcessingRenderSettings() {
 
 // ----------------- реализация Json вывода статистики -----------------
 
-void JsonReader::PrintInfoBus(ostream& output, string_view bus_view, int id) { 
+json::Node::Value JsonReader::PrintInfoBus(string_view bus_view, int id) { 
     const auto info = tran_catal_.GetBusInfo(bus_view);
+    json::Builder build{};
     if (info.count_stops_ == -1) {
-        output << '\n' << "\"error_message\": "sv << "\"not found\","sv;
-        output << '\n' << "\"request_id\": "sv << id;
+        build.StartDict()
+                .Key("error_message"s).Value("not found"s)
+                .Key("request_id"s).Value(id)
+            .EndDict();
     } else {
-        output << '\n' << "\"curvature\": "sv << info.curvature_ << ","sv;
-        output << '\n' << "\"request_id\": "sv << id << ","sv;
-        output << '\n' << "\"route_length\": "sv << info.length_bus_ << ","sv;
-        output << '\n' << "\"stop_count\": "sv << info.count_stops_ << ","sv;
-        output << '\n' << "\"unique_stop_count\": "sv << info.count_unique_stops_;
+        build.StartDict()
+                .Key("curvature"s).Value(info.curvature_)
+                .Key("request_id"s).Value(id)
+                .Key("route_length"s).Value(info.length_bus_)
+                .Key("stop_count"s).Value(info.count_stops_)
+                .Key("unique_stop_count"s).Value(info.count_unique_stops_)
+            .EndDict();
     }
+    return build.Build().GetValue();
 }
 
-void JsonReader::PrintInfoStop(ostream& output, string_view stop_view, int id) {
+json::Node::Value JsonReader::PrintInfoStop(string_view stop_view, int id) {
     const auto ptr_on_passing_buses = tran_catal_.GetPassingBuses(stop_view);
+    json::Builder build{};
     if (ptr_on_passing_buses == nullptr) {
-        output << '\n' << "\"error_message\": "sv << "\"not found\","sv;
-        output << '\n' << "\"request_id\": "sv << id;
+        build.StartDict()
+                .Key("error_message"s).Value("not found"s)
+                .Key("request_id"s).Value(id)
+            .EndDict();
     } else {
-        output << "\"buses\": ["sv << '\n';
-        bool is_first = true;
+        build.StartDict()
+                .Key("buses"s)
+                    .StartArray();
         for (auto& bus : *ptr_on_passing_buses) {
-            if (is_first) {
-                is_first = false;
-            } else {
-                output << ',' << '\n';    
-            }
-            output << '"' << bus << '"';
+            build.Value((string)bus);
         }
-        output << '\n' << "],"sv << '\n';
-        output << '\n' << "\"request_id\": "sv << id;
+                build.EndArray()
+            .Key("request_id"s).Value(id)
+        .EndDict();
     }
+    return build.Build().GetValue();
 }
 
-void JsonReader::PrintInfoMap(ostream& output, int id) {
+json::Node::Value JsonReader::PrintInfoMap(int id) {
     visual::MapRender map_render{ProcessingRenderSettings()};
-    output << "\"map\": "sv;
     stringstream potok;
     map_render.Render(potok, tran_catal_);
     string map, full_map;
@@ -179,35 +185,32 @@ void JsonReader::PrintInfoMap(ostream& output, int id) {
         }
         full_map += map;
     }
-    json::PrintValue(full_map, output);
-    output << ",\n"sv;
-    output << "\"request_id\": "sv << id << "\n"sv;
+    json::Builder build{};
+    build.StartDict()
+            .Key("map"s).Value(full_map)
+            .Key("request_id"s).Value(id)
+    .EndDict();
+    return build.Build().GetValue();
 }
 
 void JsonReader::ProcessingRequests(ostream& output) {
-    output << '[' << '\n';
-    bool is_first = true;
+    json::Builder build{};
+    build.StartArray();
     for (const auto& request : doc_json_.GetRoot().AsMap().at("stat_requests"s).AsArray()) {
-        if (is_first) {
-            is_first = false;
-        } else {
-            output << ',' << '\n';
-        }
-        output << " {"sv;
         json::Dict dict = request.AsMap();
         string_view type = dict.at("type"s).AsString();
         if (type == "Bus"sv) {
-            PrintInfoBus(output, dict.at("name"s).AsString(), dict.at("id"s).AsInt());
+            build.Value(PrintInfoBus(dict.at("name"s).AsString(), dict.at("id"s).AsInt()));
         }
         if (type == "Stop"sv) {
-            PrintInfoStop(output, dict.at("name"s).AsString(), dict.at("id"s).AsInt());
+            build.Value(PrintInfoStop(dict.at("name"s).AsString(), dict.at("id"s).AsInt()));
         }
         if (type == "Map"sv) {
-            PrintInfoMap(output, dict.at("id"s).AsInt());
+            build.Value(PrintInfoMap(dict.at("id"s).AsInt()));
         }
-        output << " }"sv;
     }
-    output << ']';
+    build.EndArray();
+    json::Print(json::Document{build.Build()}, output);
 }
 
 } // namespace json_handler

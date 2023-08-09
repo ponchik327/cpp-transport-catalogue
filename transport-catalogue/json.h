@@ -22,11 +22,10 @@ public:
     using runtime_error::runtime_error;
 };
 
-using Value = std::variant<std::nullptr_t, int, double, std::string, bool, Array, Dict>;
-
 class Node {
 public:
    /* Реализуйте Node, используя std::variant */
+    using Value = std::variant<std::nullptr_t, int, double, std::string, bool, Array, Dict>;
 
     Node() = default;
     Node(std::nullptr_t);
@@ -63,6 +62,8 @@ public:
     
     const Value& GetValue() const { return value_; }
 
+    Value& GetValue() { return value_; }
+
 private:
     Value value_;
 };
@@ -89,6 +90,8 @@ Document Load(std::istream& input);
 
 void Print(const Document& doc, std::ostream& output);
 
+void PrintNode(const Node& node, std::ostream& out);
+
 void PrintValue(std::nullptr_t, std::ostream& out);
 
 void PrintValue(const std::string& s, std::ostream& out);
@@ -98,8 +101,6 @@ void PrintValue(const bool b, std::ostream& out);
 void PrintValue(const Dict& d, std::ostream& out);
 
 void PrintValue(const Array& a, std::ostream& out);
-
-void PrintNode(const Node& node, std::ostream& out);
 
 template <typename V>
 void PrintValue(const V& value, std::ostream& out) {
