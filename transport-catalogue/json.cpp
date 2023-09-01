@@ -371,11 +371,11 @@ Document Load(istream& input) {
 }
 
 void PrintValue(std::nullptr_t, std::ostream& out) {
-    out << "null"sv;
+    out << "null"sv << '\n';
 }
 
 void PrintValue(const string& s, std::ostream& out) {
-    out << '"';
+    out << '\n' << '"';
     for (const auto& c : s) {
         switch (c) {
             case '\"':
@@ -399,9 +399,9 @@ void PrintValue(const string& s, std::ostream& out) {
 
 void PrintValue(const bool b, std::ostream& out) {
     if (b) {
-        out << "true"sv;
+        out << "true"sv << '\n';
     } else {
-        out << "false"sv;
+        out << "false"sv << '\n';
     }
 }
 
@@ -418,7 +418,7 @@ void PrintValue(const Dict& d, std::ostream& out) {
         out << ": "sv;
         PrintNode(node, out);
     }
-    out << '}';
+    out << '}' << '\n';
 }
 
 void PrintValue(const Array& a, std::ostream& out) {
@@ -432,7 +432,7 @@ void PrintValue(const Array& a, std::ostream& out) {
         }
         PrintNode(node, out);
     }
-    out << ']';
+    out << ']' << '\n';
 }
 
 void PrintNode(const Node& node, std::ostream& out) {

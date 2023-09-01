@@ -13,13 +13,14 @@
                 "json_builder.cpp",
                 "svg.cpp",
                 "map_renderer.cpp",
-                //"input_reader.cpp",
-                //"stat_reader.cpp",
                 "transport_catalogue.cpp",
                 "-o",
                 "out.exe"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "problemMatcher": []
         }
     ],

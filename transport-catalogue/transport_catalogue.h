@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
+#include <optional>
 
 #include "geo.h"
 #include "domain.h"
@@ -17,6 +18,7 @@ class TransportCatalogue {
 
 public:
     void AddStop(const Stop&& stop);
+    const std::deque<Stop>& GetStops() const;
     Stop* FindStop(std::string_view name_stop);
 
     void AddBus(const Bus&& bus);
@@ -29,6 +31,7 @@ public:
     std::set<std::string_view>* GetPassingBuses(std::string_view stop);
 
     void SetDistance(std::string_view from, std::string_view to, int distance);
+    std::optional<int> FindDistance(std::string_view from, std::string_view to);
 
 private :
 
@@ -47,7 +50,6 @@ private :
     std::unordered_map<std::string_view, std::set<std::string_view>> stop_to_passing_buses_;
 
     void ComputeLength(int* length_bus, double* geo_length_bus, std::vector<Stop*> stops);
-    int FindDistance(std::string_view from, std::string_view to);
 
 };
 

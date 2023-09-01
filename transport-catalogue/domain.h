@@ -9,6 +9,7 @@ struct Stop
 {
     std::string name_stop_;
     geo::Coordinates coordinates_;
+    int id_;
 };
 
 struct Bus
