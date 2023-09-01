@@ -41,7 +41,7 @@ private:
     void RenderBusLine(svg::Document& doc, std::vector<std::vector<geo::Coordinates>>& bus_coordinates, detail::SphereProjector& sph_proj);
 
     void RenderNameBuses(svg::Document& doc, std::set<std::string_view>& name_bases, TransportCatalogue& t_c, detail::SphereProjector& sph_proj);
-    void RenderText(svg::Document& doc, Stop* ptr_stop, std::string_view bus_name, size_t index, detail::SphereProjector& sph_proj);
+    void RenderText(svg::Document& doc, const Stop* ptr_stop, std::string_view bus_name, size_t index, detail::SphereProjector& sph_proj);
 
     void RenderStopSymbol(svg::Document& doc, std::set<std::string_view>& name_stops, TransportCatalogue& t_c, detail::SphereProjector& sph_proj);
     

@@ -33,7 +33,7 @@ void MapRender::RenderBusLine(svg::Document& doc, vector<vector<geo::Coordinates
     }  
 }
 
-void MapRender::RenderText(svg::Document& doc, Stop* ptr_stop, string_view bus_name, size_t index, detail::SphereProjector& sph_proj) {
+void MapRender::RenderText(svg::Document& doc, const Stop* ptr_stop, string_view bus_name, size_t index, detail::SphereProjector& sph_proj) {
     svg::Text text_preparation;
     text_preparation.SetPosition(sph_proj({ptr_stop->coordinates_.lat, ptr_stop->coordinates_.lng}))
                     .SetOffset(bus_label_offset_)
@@ -59,8 +59,8 @@ void MapRender::RenderNameBuses(svg::Document& doc, set<string_view>& name_bases
     size_t index = 0;
     for (const auto& bus_name : name_bases) {
         auto ptr_on_stops = t_c.FindBus(bus_name)->ptr_stops_;
-        Stop* ptr_first_stop;
-        Stop* ptr_last_stop;
+        const Stop* ptr_first_stop;
+        const Stop* ptr_last_stop;
         if (!ptr_on_stops.empty()) {
             ptr_first_stop = ptr_on_stops.front();
             ptr_last_stop = ptr_on_stops[ptr_on_stops.size() / 2];

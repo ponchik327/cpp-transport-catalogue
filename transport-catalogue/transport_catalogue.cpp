@@ -13,7 +13,7 @@ const std::deque<Stop>& TransportCatalogue::GetStops() const {
     return stops_;
 }
 
-Stop* TransportCatalogue::FindStop(std::string_view name_stop) {
+const Stop* TransportCatalogue::FindStop(std::string_view name_stop) const {
     if (auto it_stop = accses_to_stops_.find(name_stop); it_stop != accses_to_stops_.end()) {
         return it_stop->second;
     }
@@ -60,14 +60,14 @@ void TransportCatalogue::SetDistance(string_view from, string_view to, int dista
     }
 }
 
-optional<int> TransportCatalogue::FindDistance(string_view from, string_view to) {
+optional<int> TransportCatalogue::FindDistance(string_view from, string_view to) const {
     if (auto it_dist = stopping_distance_.find({from, to}); it_dist != stopping_distance_.end()) {
         return it_dist->second;
     }
     return nullopt;
 }
 
-void TransportCatalogue::ComputeLength(int* length_bus, double* geo_length_bus, vector<Stop*> stops) {
+void TransportCatalogue::ComputeLength(int* length_bus, double* geo_length_bus, vector<const Stop*> stops) {
     for (auto it = stops.begin(); it < stops.end(); ++it) {
         if (it + 1 < stops.end()) {
             *geo_length_bus += ComputeDistance(geo::Coordinates{(*it)->coordinates_.lat, (*it)->coordinates_.lng}, geo::Coordinates{(*(it + 1))->coordinates_.lat, (*(it + 1))->coordinates_.lng});

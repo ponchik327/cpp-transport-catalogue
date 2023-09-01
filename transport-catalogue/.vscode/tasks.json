@@ -14,6 +14,7 @@
                 "svg.cpp",
                 "map_renderer.cpp",
                 "transport_catalogue.cpp",
+                "transport_router.cpp",
                 "-o",
                 "out.exe"
             ],

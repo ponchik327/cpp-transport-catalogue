@@ -5,6 +5,7 @@
 #include <iterator>
 
 #include "transport_catalogue.h"
+#include "transport_router.h"
 #include "json_builder.h"
 #include "json.h"
 #include "map_renderer.h"
@@ -39,45 +40,19 @@ private:
     TransportCatalogue& tran_catal_;
     const json::Document doc_json_;
 
-    struct RouteWeight;
-    graph::DirectedWeightedGraph<RouteWeight> graph_;
-
-    struct RouteWeight {
-        double weight;
-        std::string_view name;
-        int span_count;
-        bool is_bus;
-
-        bool operator< (const RouteWeight& other) const {
-            return weight < other.weight;
-        }
-
-        bool operator> (const RouteWeight& other) const {
-            return weight > other.weight;
-        }
-
-        RouteWeight operator+ (const RouteWeight& other) const {
-            return {weight + other.weight, name, span_count, is_bus};
-        }
-    };
-
     void InitialTransportCatalogue(TransportCatalogue& t_c);
     Stop ReadStop(Request& request, TransportCatalogue& t_c);
     Bus ReadBus(Request& request, TransportCatalogue& t_c);
-
     json::Node::Value PrintInfoBus(std::string_view bus_view, int id);
     json::Node::Value PrintInfoStop(std::string_view stop_view, int id);
-    json::Node::Value PrintInfoMap(int id);
-    json::Node::Value PrintInfoRoute(std::string_view from, std::string_view to, int id);
 
     visual::MapRender ProcessingRenderSettings();
     uint8_t NodeToUint8(const json::Node& color, int index);
     svg::Color InitialColor(const json::Node& color);
-
-    void InitialGraph(graph::DirectedWeightedGraph<RouteWeight>& graph);
-    graph::DirectedWeightedGraph<RouteWeight> ProcessingRouteSettings();
-    void ComputeEdgesDirectBus(graph::DirectedWeightedGraph<RouteWeight>& grph, Bus* const ptr_bus, double bus_velocity);
-    void ComputeEdgesCircularBus(graph::DirectedWeightedGraph<RouteWeight>& grph, Bus* const ptr_bus, double bus_velocity);
+    json::Node::Value PrintInfoMap(int id);
+    
+    TransportRouter ProcessingRouterSettings();
+    json::Node::Value PrintInfoRoute(std::string_view from, std::string_view to, int id);
 }; 
 
 } // namespace json_handler

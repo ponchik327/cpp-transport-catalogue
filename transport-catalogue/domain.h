@@ -20,7 +20,7 @@ struct Bus
     };
     
     std::string name_bus_;
-    std::vector<Stop*> ptr_stops_;
+    std::vector<const Stop*> ptr_stops_;
     BusType type_;
 };
 

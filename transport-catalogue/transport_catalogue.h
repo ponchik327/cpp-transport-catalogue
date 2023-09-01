@@ -19,7 +19,7 @@ class TransportCatalogue {
 public:
     void AddStop(const Stop&& stop);
     const std::deque<Stop>& GetStops() const;
-    Stop* FindStop(std::string_view name_stop);
+    const Stop* FindStop(std::string_view name_stop) const;
 
     void AddBus(const Bus&& bus);
     Bus* FindBus(std::string_view name_bus);
@@ -31,7 +31,7 @@ public:
     std::set<std::string_view>* GetPassingBuses(std::string_view stop);
 
     void SetDistance(std::string_view from, std::string_view to, int distance);
-    std::optional<int> FindDistance(std::string_view from, std::string_view to);
+    std::optional<int> FindDistance(std::string_view from, std::string_view to) const;
 
 private :
 
@@ -49,7 +49,7 @@ private :
     std::unordered_map<std::pair<std::string_view, std::string_view>, int, Hasher> stopping_distance_;
     std::unordered_map<std::string_view, std::set<std::string_view>> stop_to_passing_buses_;
 
-    void ComputeLength(int* length_bus, double* geo_length_bus, std::vector<Stop*> stops);
+    void ComputeLength(int* length_bus, double* geo_length_bus, std::vector<const Stop*> stops);
 
 };
 
