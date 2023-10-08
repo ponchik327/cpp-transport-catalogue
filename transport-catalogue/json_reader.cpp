@@ -8,11 +8,37 @@ namespace json_handler {
 
 // ----------- реализация JSON ридера ---------------------
 
-JsonReader::JsonReader(istream& input, TransportCatalogue& t_c) 
+JsonReader::JsonReader(std::istream& input, bool need_serialize) 
+    : input_(input)
+    , doc_json_(json::Load(input_))
+    , tran_catal_(InitialTransportCatalogue())
+    , map_render_(ProcessingRenderSettings())
+    , tran_rout_(tran_catal_, ProcessingRouterSettings()) {
+        if (need_serialize) {
+            SerializeSettigs ss = ProcessingSerializeSettings();
+
+            std::ofstream out_clear(ss.file_, std::ios::binary | std::ios::out | std::ios::trunc);
+            out_clear.close();
+            std::ofstream out(ss.file_, std::ios::binary | std::ios::app);
+
+            serialization::SerializeTransportCatalogue(out, tran_catal_);
+            serialization::SerializeVisualizationSettings(out, map_render_);
+
+            std::ofstream out_router_clear("transport_router.db", std::ios::binary | std::ios::out | std::ios::trunc);
+            out_router_clear.close();
+            std::ofstream out_router("transport_router.db", std::ios::binary | std::ios::app);
+            serialization::SerializeTransportRouter(out_router, tran_rout_);
+        }
+}
+
+JsonReader::JsonReader(istream& input) 
     : input_(input) 
-    , tran_catal_(t_c)
-    , doc_json_(json::Load(input_)) {
-        InitialTransportCatalogue(tran_catal_);
+    , doc_json_(json::Load(input_))
+    , s_s(ProcessingSerializeSettings())
+    , tran_catal_(serialization::DeserializeTransportCatalogue(s_s.file_))
+    , map_render_(serialization::DeserializeVisualizationSettings(s_s.file_))
+    , tran_rout_(serialization::DeserializeTransportRouter("transport_router.db", tran_catal_)) {
+
 }
 
 void JsonReader::MakeRequestQueue() {
@@ -31,8 +57,9 @@ JsonReader::RequestQueque& JsonReader::GetRequestQueue() {
     return request_queue_add_;
 }
 
-void JsonReader::InitialTransportCatalogue(TransportCatalogue& t_c) {
+TransportCatalogue JsonReader::InitialTransportCatalogue() {
     MakeRequestQueue();
+    TransportCatalogue t_c;
     for (auto& [request, type] : request_queue_add_) {
         if (type == RequestType::STOP) {
             Stop stop = ReadStop(request, t_c);
@@ -43,6 +70,7 @@ void JsonReader::InitialTransportCatalogue(TransportCatalogue& t_c) {
             t_c.AddBus(move(bus));
         }
     }
+    return t_c;
 }
 
 // ----------- считывание отсановок Json ридера ---------------------
@@ -130,7 +158,7 @@ visual::MapRender JsonReader::ProcessingRenderSettings() {
 
 // --------------------------- считывание настроек запроса Route --------------------------------
 
-TransportRouter JsonReader::ProcessingRouterSettings() {
+RouteSettings JsonReader::ProcessingRouterSettings() {
     RouteSettings rs;
     for (const auto& [name, value] : doc_json_.GetRoot().AsMap().at("routing_settings"s).AsMap()) {
         if (name == "bus_wait_time"sv) {
@@ -140,10 +168,22 @@ TransportRouter JsonReader::ProcessingRouterSettings() {
             rs.bus_velocity = value.AsDouble();
         }
     }
-    TransportRouter tr{tran_catal_, rs};
-    return tr;
+    //TransportRouter tr{tran_catal_, rs};
+    return rs;
 }
 
+// ----------------- считывание настроек сериализации -----------------
+
+SerializeSettigs JsonReader::ProcessingSerializeSettings() {
+    SerializeSettigs ss;
+    for (const auto& [name, value] : doc_json_.GetRoot().AsMap().at("serialization_settings"s).AsMap()) {
+        if (name == "file"sv) {
+            ss.file_ = value.AsString();
+        }
+    }
+    return ss;
+}
+    
 // ----------------- реализация Json вывода статистики -----------------
 
 json::Node::Value JsonReader::PrintInfoBus(string_view bus_view, int id) { 
@@ -189,9 +229,8 @@ json::Node::Value JsonReader::PrintInfoStop(string_view stop_view, int id) {
 }
 
 json::Node::Value JsonReader::PrintInfoMap(int id) {
-    visual::MapRender map_render{ProcessingRenderSettings()};
     stringstream potok;
-    map_render.Render(potok, tran_catal_);
+    map_render_.Render(potok, tran_catal_);
     string map, full_map;
     bool is_first = true;
     while (getline(potok, map, '\n')) {
@@ -211,8 +250,7 @@ json::Node::Value JsonReader::PrintInfoMap(int id) {
 }
 
 json::Node::Value JsonReader::PrintInfoRoute(string_view from, string_view to, int id) {
-    static const TransportRouter tr = move(ProcessingRouterSettings());
-    const auto [info, grph] = tr.GetRouteInfo(from, to);
+    const auto [info, grph] = tran_rout_.GetRouteInfo(from, to);
     json::Builder build{};
     if (info) {
         build.StartDict()

@@ -24,12 +24,37 @@ class SphereProjector;
 
 } // namespace detail
 
+struct Label {
+    double font_size;
+    svg::Point offset;
+};
+
+struct Screen {
+    double width;
+    double height;
+    double padding;
+};
+
+struct UnderLayer {
+    svg::Color color;
+    double width;
+};
+
 using Properties = std::unordered_map<std::string, double>;
 
 class MapRender {
 public:
+    MapRender() = default;
     MapRender(Properties prop, svg::Point bus_offset, svg::Point stop_offset, svg::Color underlayer_color, std::vector<svg::Color> color_palette);
     void Render(std::ostream& out, TransportCatalogue& t_c);
+
+    Label GetLabelStop() const;
+    Label GetLabelBus() const;
+    Screen GetScreen() const;
+    UnderLayer GetUnderLayer() const;
+    double GetStopRadius() const;
+    double GetLineWidth() const;
+    const std::vector<svg::Color>& GetColorPalette() const;
 
 private:
     Properties properties_;

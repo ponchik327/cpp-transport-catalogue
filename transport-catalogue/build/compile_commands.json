@@ -1,0 +1,92 @@
+[
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\transport_catalogue.pb.cc.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\build\\transport_catalogue.pb.cc",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/transport_catalogue.pb.cc",
+  "output": "CMakeFiles/transport_catalogue.dir/transport_catalogue.pb.cc.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\svg.pb.cc.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\build\\svg.pb.cc",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/svg.pb.cc",
+  "output": "CMakeFiles/transport_catalogue.dir/svg.pb.cc.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\map_renderer.pb.cc.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\build\\map_renderer.pb.cc",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/map_renderer.pb.cc",
+  "output": "CMakeFiles/transport_catalogue.dir/map_renderer.pb.cc.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\graph.pb.cc.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\build\\graph.pb.cc",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/graph.pb.cc",
+  "output": "CMakeFiles/transport_catalogue.dir/graph.pb.cc.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\transport_router.pb.cc.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\build\\transport_router.pb.cc",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/transport_router.pb.cc",
+  "output": "CMakeFiles/transport_catalogue.dir/transport_router.pb.cc.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\main.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\main.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/main.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\geo.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\geo.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/geo.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/geo.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\json.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\json.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/json.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/json.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\json_reader.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\json_reader.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/json_reader.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/json_reader.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\json_builder.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\json_builder.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/json_builder.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/json_builder.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\svg.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\svg.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/svg.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/svg.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\map_renderer.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\map_renderer.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/map_renderer.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/map_renderer.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\transport_catalogue.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\transport_catalogue.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/transport_catalogue.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/transport_catalogue.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\serialization.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\serialization.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/serialization.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/serialization.cpp.obj"
+},
+{
+  "directory": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/transport_catalogue.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\transport_catalogue.dir\\transport_router.cpp.obj -c C:\\Users\\seva-\\cpp-transport-catalogue\\transport-catalogue\\transport_router.cpp",
+  "file": "C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/transport_router.cpp",
+  "output": "CMakeFiles/transport_catalogue.dir/transport_router.cpp.obj"
+}
+]

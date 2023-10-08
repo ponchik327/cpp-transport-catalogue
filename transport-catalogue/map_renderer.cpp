@@ -14,6 +14,35 @@ MapRender::MapRender(Properties prop, svg::Point bus_offset, svg::Point stop_off
     , color_palette_(move(color_palette)) {
 }
 
+Label MapRender::GetLabelStop() const {
+    return {properties_.at("stop_label_font_size"), stop_label_offset_};
+}
+
+Label MapRender::GetLabelBus() const {
+    return {properties_.at("bus_label_font_size"), bus_label_offset_};
+}
+
+Screen MapRender::GetScreen() const {
+    return {properties_.at("width"), properties_.at("height"), properties_.at("padding")};
+}
+
+UnderLayer MapRender::GetUnderLayer() const {
+    return {underlayer_color_, properties_.at("underlayer_width")};
+}
+
+double MapRender::GetStopRadius() const {
+    return properties_.at("stop_radius");
+}
+
+double MapRender::GetLineWidth() const {
+    return properties_.at("line_width");
+}
+
+const std::vector<svg::Color>& MapRender::GetColorPalette() const {
+    return color_palette_;
+}
+
+
 void MapRender::RenderBusLine(svg::Document& doc, vector<vector<geo::Coordinates>>& bus_coordinates, detail::SphereProjector& sph_proj) {
     size_t index = 0;
     for (const auto& coordinates : bus_coordinates) {

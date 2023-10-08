@@ -14,7 +14,7 @@ struct RouteSettings {
 };
 
 class TransportRouter {
-private:
+public:
     struct RouteWeight {
         double weight;
         std::string_view name;
@@ -35,11 +35,15 @@ private:
     };
 
 public:
-    TransportRouter(const catalogue::TransportCatalogue& t_c, const RouteSettings& rs);
-    
     using Graph = graph::DirectedWeightedGraph<RouteWeight>;
+
+    TransportRouter(catalogue::TransportCatalogue& t_c, const RouteSettings& rs);
+    TransportRouter(const catalogue::TransportCatalogue& t_c, Graph&& graph);
+    
     using RouteInfo = graph::Router<RouteWeight>::RouteInfo;
     std::tuple<std::optional<RouteInfo>, const Graph&> GetRouteInfo(std::string_view from, std::string_view to) const;
+    const Graph& GetGraph() const;
+    const catalogue::TransportCatalogue& GetCatalogue() const;
 
 private:
     const catalogue::TransportCatalogue& tran_catal_;

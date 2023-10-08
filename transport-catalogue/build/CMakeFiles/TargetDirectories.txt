@@ -1,0 +1,5 @@
+C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/CMakeFiles/transport_catalogue.dir
+C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/CMakeFiles/package.dir
+C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/CMakeFiles/package_source.dir
+C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/CMakeFiles/edit_cache.dir
+C:/Users/seva-/cpp-transport-catalogue/transport-catalogue/build/CMakeFiles/rebuild_cache.dir

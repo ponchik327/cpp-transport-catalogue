@@ -25,7 +25,11 @@ void TransportCatalogue::AddBus(const Bus&& bus) {
     accses_to_buses_[string_view(buses_.back().name_bus_)] = &buses_.back();
 }
 
-Bus* TransportCatalogue::FindBus(std::string_view name_bus) {
+const std::deque<Bus>& TransportCatalogue::GetBuses() const {
+    return buses_;
+}
+
+const Bus* TransportCatalogue::FindBus(std::string_view name_bus) const {
     if (auto it_bus = accses_to_buses_.find(name_bus); it_bus != accses_to_buses_.end()) {
         return it_bus->second;
     }
@@ -67,6 +71,10 @@ optional<int> TransportCatalogue::FindDistance(string_view from, string_view to)
     return nullopt;
 }
 
+const std::unordered_map<std::pair<std::string_view, std::string_view>, int, TransportCatalogue::Hasher>& TransportCatalogue::GetMapDistance() const {
+    return stopping_distance_;
+}
+
 void TransportCatalogue::ComputeLength(int* length_bus, double* geo_length_bus, vector<const Stop*> stops) {
     for (auto it = stops.begin(); it < stops.end(); ++it) {
         if (it + 1 < stops.end()) {
@@ -84,7 +92,7 @@ const unordered_map<string_view, Bus*>& TransportCatalogue::GetMapBuses() const 
 }
 
 InfoBus TransportCatalogue::GetBusInfo(string_view bus_view) {
-    Bus* bus = FindBus(bus_view);
+    const Bus* bus = FindBus(bus_view);
     if (bus == nullptr) {
         return InfoBus{-1, -1, -1, -1};
     }

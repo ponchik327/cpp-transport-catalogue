@@ -1,28 +1,22 @@
 {
     "tasks": [
         {
-            "label": "My build task",
-            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "type":"shell",
+            "label": "Run with param: make_base",
+            "command": "C:\\cpp\\cmakeQuickStart\\build\\transport_catalogue.exe",
             "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "main.cpp",
-                "geo.cpp",
-                "json.cpp",
-                "json_reader.cpp",
-                "json_builder.cpp",
-                "svg.cpp",
-                "map_renderer.cpp",
-                "transport_catalogue.cpp",
-                "transport_router.cpp",
-                "-o",
-                "out.exe"
+                "make_base"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
+            "detail": "Задача создана мной."
+        },
+        {
+            "type":"shell",
+            "label": "Run with param: process_requests",
+            "command": "C:\\cpp\\cmakeQuickStart\\build\\transport_catalogue.exe",
+            "args": [
+                "process_requests"
+            ],
+            "detail": "Задача создана мной."
         }
     ],
     "version": "2.0.0"

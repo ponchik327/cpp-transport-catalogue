@@ -2,9 +2,18 @@
 
 using namespace std;
 
-TransportRouter::TransportRouter(const catalogue::TransportCatalogue& t_c, const RouteSettings& rs) 
+TransportRouter::TransportRouter(catalogue::TransportCatalogue& t_c, const RouteSettings& rs) 
     : tran_catal_(t_c)
     , graph_(move(InitialGraph(rs))) {
+}
+
+TransportRouter::TransportRouter(const catalogue::TransportCatalogue& t_c, Graph&& graph) 
+    : tran_catal_(t_c)
+    , graph_(move(graph)) {
+}
+
+const catalogue::TransportCatalogue& TransportRouter::GetCatalogue() const {
+    return tran_catal_;
 }
 
 std::tuple<std::optional<TransportRouter::RouteInfo>, const TransportRouter::Graph&> TransportRouter::GetRouteInfo(std::string_view from, std::string_view to) const {
@@ -77,4 +86,8 @@ TransportRouter::Graph TransportRouter::InitialGraph(const RouteSettings& rs) {
         }
     }
     return grph;
+}
+
+const TransportRouter::Graph& TransportRouter::GetGraph() const {
+    return graph_;
 }
